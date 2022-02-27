@@ -20,4 +20,3 @@ def generate_text():
     return(
        choice(First_part)+choice(second_part)
     )
-print(generate_text())
