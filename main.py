@@ -5,6 +5,8 @@ from telethon import TelegramClient
 from telethon import functions, types
 import questionary
 
+from report_text import generate_text
+
 api_id = int(questionary.password('Api ID:').ask())
 api_hash = questionary.password('Api hash:').ask()
 
@@ -32,8 +34,8 @@ async def main():
             result = await client(functions.account.ReportPeerRequest(
                 peer=telegram_channel,
                 reason=types.InputReportReasonSpam(),
-                message='RUSSIAN PROPAGANDA AGAINST UKRAINE DURING RUSSIAN INVASION IN UKRAINE' + str(random.random())
-            ))
+                message=generate_text())
+            )
             print(result)
         except ValueError:
             print("Channel not found")
