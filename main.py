@@ -1,5 +1,4 @@
 import asyncio
-import datetime
 import random
 import pymongo
 import os
@@ -7,17 +6,8 @@ import datetime
 
 from dotenv import load_dotenv
 from telethon import TelegramClient
-from telethon import errors
 from telethon import functions, types
 
-<<<<<<< HEAD
-from report_text import generate_text
-
-api_id = int(questionary.password('Api ID:').ask())
-api_hash = questionary.password('Api hash:').ask()
-
-client = TelegramClient('session_new', api_id, api_hash)
-=======
 load_dotenv()
 
 if os.getenv('MONGO_HOST'):
@@ -36,7 +26,6 @@ API_ID = os.getenv('API_ID')
 API_HASH = os.getenv('API_HASH')
 
 client = TelegramClient('session_new', API_ID, API_HASH)
->>>>>>> d1dd10bdf6622f30fcfa64c0e3cb18f53e68d441
 client.start()
 
 print('Bot started')
@@ -47,19 +36,11 @@ async def fillDB():
 
     telegram_list = open('telegram_db', 'r').readlines()
 
-<<<<<<< HEAD
-    for (i, telegram_channel) in enumerate(telegram_list[:number_of_channels_rep]):
-=======
     for (i, telegram_channel) in enumerate(telegram_list):
->>>>>>> d1dd10bdf6622f30fcfa64c0e3cb18f53e68d441
         if "https://" in telegram_channel:
             telegram_channel = telegram_channel.split('/')[-1]
         elif '@' in telegram_channel:
             telegram_channel = telegram_channel[1:]
-<<<<<<< HEAD
-        print(i + 1, telegram_channel.strip())
-=======
->>>>>>> d1dd10bdf6622f30fcfa64c0e3cb18f53e68d441
         try:
             telegram_channel = telegram_channel.split('\n')[0]
             splittedWithPriority = telegram_channel.split('|')
@@ -106,11 +87,7 @@ async def runBot():
             result = await client(functions.account.ReportPeerRequest(
                 peer=telegram_channel["name"],
                 reason=types.InputReportReasonSpam(),
-<<<<<<< HEAD
-                message=generate_text())
-=======
                 message=message)
->>>>>>> d1dd10bdf6622f30fcfa64c0e3cb18f53e68d441
             )
             print(result)
 
@@ -128,20 +105,6 @@ async def runBot():
 
         except ValueError:
             print("Channel not found")
-        except errors.UsernameInvalidError:
-            print("Nobody is using this username, or the username is unacceptable")
-        except errors.FloodWaitError as e:
-            seconds_left = e.seconds
-            while seconds_left > 0:
-                print("Flood wait error. Waiting for ", str(datetime.timedelta(seconds=seconds_left)))
-                seconds_left -= 60
-                await asyncio.sleep(60)
-
         await asyncio.sleep(10 + 2 * random.random())
-<<<<<<< HEAD
-
-
-=======
->>>>>>> d1dd10bdf6622f30fcfa64c0e3cb18f53e68d441
 with client:
     client.loop.run_until_complete(main())
