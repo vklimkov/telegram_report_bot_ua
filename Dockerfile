@@ -9,7 +9,7 @@
     RUN apt install -y python3 python3-pip git
 
     # clone from git
-    RUN git clone https://github.com/AndrewHaluza/telegram_report_bot_ua.git 
+    RUN git clone https://github.com/Antcating/telegram_report_bot_ua.git
 
     WORKDIR /home/telegram_report_bot_ua
 
