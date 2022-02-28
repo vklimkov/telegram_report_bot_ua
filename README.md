@@ -9,7 +9,7 @@
 1. По-перше, вам необхідно інсталювати Python3. Python можна завантажити за [посиланням](https://www.python.org/).
 2. Завантажуємо MongoDB. [посилання](https://www.mongodb.com/try/download/community?tck=docs_server)
 3. 
-    - Завантажуємо  [https://github.com/AndrewHaluza/telegram_report_bot_ua/archive/refs/heads/main.zip](https://github.com/AndrewHaluza/telegram_report_bot_ua/archive/refs/heads/main.zip)
+    - Завантажуємо  [https://github.com/Antcating/telegram_report_bot_ua/archive/refs/heads/main.zip](https://github.com/Antcating/telegram_report_bot_ua/archive/refs/heads/main.zip)
     -Розархівовуємо і переходимо в папку
 
     або виконуємо наступні команди з консолі:
