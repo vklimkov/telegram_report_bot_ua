@@ -11,7 +11,7 @@ from client_factory import ClientFactory
 from channels_database import ChannelsDatabase
 
 
-client = ClientFactory.create_client()
+client = ClientFactory.create_client(session_name="spam")
 comments = CommentsGenerator()
 sent_messages = set()
 visited_channels = set()
@@ -45,7 +45,7 @@ async def main():
                     logging.info('Couldnt find last message in the chat {}. Maybe cant send to this one'.format(telegram_channel))
                 except Exception as e:
                     logging.info('some other exception for {}: {}'.format(telegram_channel, str(e)))
-                    await asyncio.sleep(5 + 5 * random.random())
+                    await asyncio.sleep(10 + 5 * random.random())
         await asyncio.sleep(180)
 
 

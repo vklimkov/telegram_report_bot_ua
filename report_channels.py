@@ -11,7 +11,7 @@ from client_factory import ClientFactory
 from channels_database import ChannelsDatabase
 
 
-client = ClientFactory.create_client()
+client = ClientFactory.create_client(session_name="report")
 print('Bot started')
 
 

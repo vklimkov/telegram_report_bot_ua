@@ -8,7 +8,7 @@ from telethon import TelegramClient
 class ClientFactory:
 
     @staticmethod
-    def create_client(credentials_path='config.ini'):
+    def create_client(credentials_path='config.ini', session_name="new"):
         if os.path.exists(credentials_path):
             config = configparser.ConfigParser()
             config.read(credentials_path)
@@ -25,6 +25,6 @@ class ClientFactory:
             with open(credentials_path, 'w') as configfile:
                 config.write(configfile)
 
-        client = TelegramClient('session_new', api_id, api_hash)
+        client = TelegramClient('session_{}'.format(session_name), api_id, api_hash)
         client.start()
         return client
