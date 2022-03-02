@@ -1,7 +1,7 @@
 from random import choice
 
 
-def generate_text():
+def generate_report_message():
     First_part = [
         "Propaganda of the war in Ukraine. ",
         "Propaganda of the murder of Ukrainians and Ukrainian soldiers. ",
