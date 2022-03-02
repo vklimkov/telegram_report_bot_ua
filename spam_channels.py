@@ -59,7 +59,7 @@ async def main():
                 except Exception as e:
                     logging.info('some other exception for {}: {}'.format(telegram_channel, str(e)))
                     skip_channels.add(telegram_channel)
-                    await asyncio.sleep(10 + 5 * random.random())
+                await asyncio.sleep(10 + 5 * random.random())
         await asyncio.sleep(1800)
 
 
