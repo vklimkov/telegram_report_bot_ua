@@ -15,6 +15,7 @@ client = ClientFactory.create_client(session_name="spam")
 comments = CommentsGenerator()
 sent_messages = set()
 visited_channels = set()
+skip_channels = set()
 
 
 async def main():
@@ -23,17 +24,28 @@ async def main():
     while True:
         for priority in channels_db.get_priorities():
             for telegram_channel in channels_db.channels_iterator(priority, shuffle=True):
+                if telegram_channel in skip_channels:
+                    logging.info('based on past experience, skipping {}'.format(telegram_channel))
+                    continue
                 try:
                     # get last message in the chat if possible
                     async for message in client.iter_messages(telegram_channel, limit=1):
-                        text = comments.get_random_text_comment()
-                        sent = await client.send_message(telegram_channel, text, comment_to=message)
+                        if random.choice([0, 1]):
+                            text = comments.get_random_text_comment()
+                            sent = await client.send_message(telegram_channel, text, comment_to=message)
+                        else:
+                            json = comments.get_random_media_comment()
+                            sent = await client.send_file(telegram_channel, json["path"],
+                                                          caption=json["caption"], comment_to=message)
+
                         sent_messages.add(sent.id)
                         visited_channels.add(sent.peer_id.channel_id)
                         logging.info('Sent message to {}'.format(telegram_channel))
                 except ValueError:
                     logging.info('{} channel not found'.format(telegram_channel))
+                    skip_channels.add(telegram_channel)
                 except errors.UsernameInvalidError:
+                    skip_channels.add(telegram_channel)
                     logging.info('There is no {}'.format(telegram_channel))
                 except errors.FloodWaitError as e:
                     seconds_left = e.seconds
@@ -43,10 +55,12 @@ async def main():
                         await asyncio.sleep(60)
                 except errors.MsgIdInvalidError:
                     logging.info('Couldnt find last message in the chat {}. Maybe cant send to this one'.format(telegram_channel))
+                    skip_channels.add(telegram_channel)
                 except Exception as e:
                     logging.info('some other exception for {}: {}'.format(telegram_channel, str(e)))
+                    skip_channels.add(telegram_channel)
                     await asyncio.sleep(10 + 5 * random.random())
-        await asyncio.sleep(180)
+        await asyncio.sleep(1800)
 
 
 with client:
